@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './services/BooksAPI'
 import './App.css'
-import BookShelf from './components/BookShelf'
 import BookShelfList from './components/BookShelfList'
 
 class BooksApp extends React.Component {
@@ -12,12 +11,24 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
+    this.readAllBooks();
+  }
+
+  readAllBooks() {
     BooksAPI.getAll()
       .then((books) => {
         this.setState(() => ({
           books
         }))
       })
+  }
+
+  updateBooksShelf(book, newShelfName) {
+    if (book.shelf === newShelfName) {
+      return;
+    }
+    BooksAPI.update(book, newShelfName)
+      .then(() => {this.readAllBooks()})
   }
 
   render() {
