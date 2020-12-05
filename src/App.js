@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './services/BooksAPI'
 import './App.css'
 import BookShelf from './components/BookShelf'
+import BookShelfList from './components/BookShelfList'
 
 class BooksApp extends React.Component {
 
@@ -51,20 +52,12 @@ class BooksApp extends React.Component {
           </div>
         )} />
         <Route exact path="/" render={() => (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                {shelves.map((shelf) => (
-                  <BookShelf
-                    books={allBooks.filter((book) => (book.shelf === shelf.name))}
-                    title={shelf.title}
-                  />
-                ))}
-              </div>
-            </div>
+          <div>
+            <BookShelfList
+              books={allBooks}
+              shelves={shelves}
+              title='MyReads'
+            />
             <div className="open-search">
               <Link to="/search" className="open-search-link">Add a book</Link>
             </div>
