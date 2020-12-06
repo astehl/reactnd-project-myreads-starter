@@ -28,7 +28,10 @@ class BooksApp extends React.Component {
       return;
     }
     BooksAPI.update(book, newShelfName)
-      .then(() => {this.readAllBooks()})
+      .then((resp) => {
+        // console.log(`response from update: ${JSON.stringify(resp)}`);
+        this.readAllBooks();
+      })
   }
 
   render() {
@@ -68,6 +71,7 @@ class BooksApp extends React.Component {
               books={allBooks}
               shelves={shelves}
               title='MyReads'
+              onBookshelfChange={(book, newShelf) => this.updateBooksShelf(book, newShelf)}
             />
             <div className="open-search">
               <Link to="/search" className="open-search-link">Add a book</Link>
