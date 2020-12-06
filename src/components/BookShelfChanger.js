@@ -17,14 +17,20 @@ class BookShelfChanger extends React.Component {
     }
 
     render() {
+        const currentShelf = this.props.currentBookshelf;
+        const options = [
+            { value: "currentlyReading", text: "Currently Reading" }
+            , { value: "wantToRead", text: "Want to Read" }
+            , { value: "read", text: "Read" }
+            , { value: "none", text: "None" }
+        ];
         return (
             <div className="book-shelf-changer">
-                <select onChange={(event) => this.onShelfChange(event)}>
+                <select value={currentShelf} onChange={(event) => this.onShelfChange(event)}>
                     <option value="move" disabled>Move to...</option>
-                    <option value="currentlyReading">Currently Reading</option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>{option.text}</option>
+                    ))}
                 </select>
             </div>
         )

@@ -10,7 +10,7 @@ class Book extends React.Component {
     }
 
     handlerBookshelfChange(book, newBookshelf, onBookshelfChange) {
-        console.log(`book-handler: ${newBookshelf}`)
+        // console.log(`book-handler: ${newBookshelf}`)
         if (onBookshelfChange) {
             onBookshelfChange(book, newBookshelf);
         }
