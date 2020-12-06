@@ -6,11 +6,12 @@ class BookShelfList extends React.Component {
     static propTypes = {
         books: PropTypes.array.isRequired,
         shelves: PropTypes.array.isRequired,
-        title: PropTypes.string
+        title: PropTypes.string,
+        onBookshelfChange: PropTypes.func
     }
 
     render() {
-        const { books, shelves, title } = this.props;
+        const { books, shelves, title, onBookshelfChange } = this.props;
         return (
             <div className="list-books">
                 <div className="list-books-title">
@@ -23,7 +24,8 @@ class BookShelfList extends React.Component {
                                 key={shelf.name}
                                 books={books.filter((book) => (book.shelf === shelf.name))}
                                 title={shelf.title}
-                            />
+                                onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
+                                />
                         ))}
                     </div>
                 </div>
