@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
 
 class BookShelfList extends React.Component {
-    static PropTypes = {
+    static propTypes = {
         books: PropTypes.array.isRequired,
         shelves: PropTypes.array.isRequired,
         title: PropTypes.string
@@ -20,6 +20,7 @@ class BookShelfList extends React.Component {
                     <div>
                         {shelves.map((shelf) => (
                             <BookShelf
+                                key={shelf.name}
                                 books={books.filter((book) => (book.shelf === shelf.name))}
                                 title={shelf.title}
                             />
