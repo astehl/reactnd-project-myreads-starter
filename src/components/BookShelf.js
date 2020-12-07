@@ -10,14 +10,18 @@ class BookShelf extends React.Component {
         onBookshelfChange: PropTypes.func
     }
 
+    booksToRender() {
+        return this.props.books.filter((book) => (book.imageLinks && book.imageLinks.thumbnail))
+    }
+
     render() {
-        const { title, books, onBookshelfChange } = this.props;
+        const { title, onBookshelfChange } = this.props;
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title ? title : '[bookshelf name]'}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {books.map((book) => (
+                        {this.booksToRender().map((book) => (
                             <li key={book.id}>
                                 <Book
                                     book={book}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 class BookShelfChanger extends React.Component {
 
     static propTypes = {
-        currentBookshelf: PropTypes.string.isRequired,
+        currentBookshelf: PropTypes.string,
         onBookshelfChange: PropTypes.func
     }
 
@@ -17,7 +17,7 @@ class BookShelfChanger extends React.Component {
     }
 
     render() {
-        const currentShelf = this.props.currentBookshelf;
+        const currentShelf = this.props.currentBookshelf || 'none';
         const options = [
             { value: "currentlyReading", text: "Currently Reading" }
             , { value: "wantToRead", text: "Want to Read" }
