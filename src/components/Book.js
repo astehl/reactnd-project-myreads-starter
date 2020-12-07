@@ -18,6 +18,7 @@ class Book extends React.Component {
 
     render() {
         const {book, onBookshelfChange} = this.props;
+        console.log(`render book "${book.title}" on shelf ${book.shelf}`);
         return (
             <div className="book">
                 <div className="book-top">
