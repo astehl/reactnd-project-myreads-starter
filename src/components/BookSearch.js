@@ -2,6 +2,7 @@ import React from 'react'
 import * as BooksAPI from '../services/BooksAPI'
 import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
+import debounce from 'lodash.debounce'
 
 class BookSearch extends React.Component {
 
@@ -31,11 +32,13 @@ class BookSearch extends React.Component {
             })
     }
 
+    doTheSearch = debounce(() => this.searchBooks(), 500);
+    
     updateQuery(event) {
         this.setState({
             query: event.target.value
         }, () => {
-            this.searchBooks()
+            this.doTheSearch()
         })
     }
 
