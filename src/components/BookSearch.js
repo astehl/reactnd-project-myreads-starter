@@ -1,14 +1,19 @@
 import React from 'react'
-import * as BooksAPI from '../services/BooksAPI'
 import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
 import debounce from 'lodash.debounce'
+import PropTypes from 'prop-types'
 
 class BookSearch extends React.Component {
 
+    static propTypes = {
+        books: PropTypes.array.isRequired,
+        onSearchBooks: PropTypes.func,
+        onBookshelfChange: PropTypes.func
+    }
+
     state = {
-        query: '',
-        books: []
+        query: ''
     }
 
     queryIsEmpty() {
@@ -20,17 +25,11 @@ class BookSearch extends React.Component {
         if (this.queryIsEmpty()) {
             return
         }
-        BooksAPI.search(query)
-            .then((result) => {
-                const foundBooks = (result.error ? [] : result);
-                this.setState(() => ({
-                    books: foundBooks
-                }))
-            })
+        this.props.onSearchBooks(query);
     }
 
     doTheSearch = debounce(() => this.searchBooks(), 500);
-    
+
     updateQuery(event) {
         this.setState({
             query: event.target.value
@@ -40,11 +39,12 @@ class BookSearch extends React.Component {
     }
 
     shouldShowSearchResult() {
-        return !this.queryIsEmpty() && this.state.books.length > 0
+        return !this.queryIsEmpty() && this.props.books.length > 0
     }
 
     render() {
-        const { query, books } = this.state;
+        const { query } = this.state;
+        const { books, onBookshelfChange } = this.props;
         return (
             <div>
                 <div className="search-books">
@@ -67,6 +67,7 @@ class BookSearch extends React.Component {
                     <BookShelf
                         books={books}
                         title="Search Result"
+                        onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
                     />
                 )}
             </div>
