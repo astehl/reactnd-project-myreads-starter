@@ -17,15 +17,12 @@ class BookSearch extends React.Component {
 
     searchBooks() {
         const { query } = this.state;
-        console.log(`start search books with query: <${this.state.query}>`);
         if (this.queryIsEmpty()) {
             return
         }
         BooksAPI.search(query)
             .then((result) => {
-                // console.log(`search result: ${JSON.stringify(result)}`);
                 const foundBooks = (result.error ? [] : result);
-                console.log(`founded books: ${foundBooks.length}`)
                 this.setState(() => ({
                     books: foundBooks
                 }))

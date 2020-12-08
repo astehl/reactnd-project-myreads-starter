@@ -30,7 +30,6 @@ class BooksApp extends React.Component {
     }
     BooksAPI.update(book, newShelfName)
       .then((resp) => {
-        // console.log(`response from update: ${JSON.stringify(resp)}`);
         this.readAllBooks();
       })
   }
