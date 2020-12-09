@@ -9,11 +9,19 @@ class BookSearch extends React.Component {
     static propTypes = {
         books: PropTypes.array.isRequired,
         onSearchBooks: PropTypes.func,
-        onBookshelfChange: PropTypes.func
-    }
+        onBookshelfChange: PropTypes.func,
+        onComponentDidMount: PropTypes.func
+    };
 
     state = {
         query: ''
+    };
+
+    componentDidMount() {
+        const onMountHandler = this.props.onComponentDidMount;
+        if (onMountHandler) {
+            onMountHandler();
+        }
     }
 
     queryIsEmpty() {
@@ -23,7 +31,7 @@ class BookSearch extends React.Component {
     searchBooks() {
         const { query } = this.state;
         if (this.queryIsEmpty()) {
-            return
+            return;
         }
         this.props.onSearchBooks(query);
     }
@@ -35,11 +43,11 @@ class BookSearch extends React.Component {
             query: event.target.value
         }, () => {
             this.doTheSearch()
-        })
+        });
     }
 
     shouldShowSearchResult() {
-        return !this.queryIsEmpty() && this.props.books.length > 0
+        return !this.queryIsEmpty() && this.props.books.length > 0;
     }
 
     render() {
@@ -71,7 +79,7 @@ class BookSearch extends React.Component {
                     />
                 )}
             </div>
-        )
+        );
     }
 }
 
