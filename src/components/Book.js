@@ -7,7 +7,7 @@ class Book extends React.Component {
     static propTypes = {
         book: PropTypes.object.isRequired,
         onBookshelfChange: PropTypes.func
-    }
+    };
 
     handlerBookshelfChange(book, newBookshelf, onBookshelfChange) {
         if (onBookshelfChange) {
@@ -30,7 +30,7 @@ class Book extends React.Component {
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{authors}</div>
             </div>
-        )
+        );
     }
 }
 

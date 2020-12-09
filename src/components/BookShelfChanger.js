@@ -6,13 +6,13 @@ class BookShelfChanger extends React.Component {
     static propTypes = {
         currentBookshelf: PropTypes.string,
         onBookshelfChange: PropTypes.func
-    }
+    };
 
     onShelfChange(evt) {
         const newShelf = evt.target.value;
         const changeHandler = this.props.onBookshelfChange;
         if (changeHandler && newShelf !== this.props.currentBookshelf) {
-            changeHandler(newShelf)
+            changeHandler(newShelf);
         }
     }
 
@@ -33,7 +33,7 @@ class BookShelfChanger extends React.Component {
                     ))}
                 </select>
             </div>
-        )
+        );
     }
 }
 
