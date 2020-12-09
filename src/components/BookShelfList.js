@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
 
 class BookShelfList extends React.Component {
+
     static propTypes = {
         books: PropTypes.array.isRequired,
         shelves: PropTypes.array.isRequired,
@@ -25,15 +26,13 @@ class BookShelfList extends React.Component {
                                 books={books.filter((book) => (book.shelf === shelf.name))}
                                 title={shelf.title}
                                 onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
-                                />
+                            />
                         ))}
                     </div>
                 </div>
             </div>
-
-        )
+        );
     }
-
 }
 
 export default BookShelfList

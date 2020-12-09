@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Book from './Book';
+import Book from './Book'
 
 class BookShelf extends React.Component {
 
@@ -8,10 +8,10 @@ class BookShelf extends React.Component {
         title: PropTypes.string,
         books: PropTypes.array.isRequired,
         onBookshelfChange: PropTypes.func
-    }
+    };
 
     booksToRender() {
-        return this.props.books.filter((book) => (book.imageLinks && book.imageLinks.thumbnail))
+        return this.props.books.filter((book) => (book.imageLinks && book.imageLinks.thumbnail));
     }
 
     render() {
@@ -32,7 +32,7 @@ class BookShelf extends React.Component {
                     </ol>
                 </div>
             </div>
-        )
+        );
     }
 
 }
