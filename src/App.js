@@ -8,75 +8,90 @@ import BookSearch from './components/BookSearch'
 class BooksApp extends React.Component {
 
   state = {
-    allBooks: [],
-    searchResultBooks: []
+    booksInBookshelves: [],
+    booksInSearchResult: []
   }
 
   componentDidMount() {
-    this.readAllBooks();
+    this.getBooksInBookshelves();
   }
 
-  readAllBooks() {
+  getBooksInBookshelves() {
     BooksAPI.getAll()
       .then((books) => {
         this.setState(() => ({
-          allBooks: books
-        }))
+          booksInBookshelves: books
+        }));
       })
   }
 
   searchBooks(query) {
     BooksAPI.search(query)
       .then((result) => {
-        const foundBooks = (result.error ? [] : result);
+        const foundBooks = (result.error ? [] : this.withShelfSet(result));
         this.setState(() => ({
-          searchResultBooks: foundBooks
-        }))
+          booksInSearchResult: foundBooks
+        }));
       })
   }
 
+  withShelfSet(foundBooks) {
+    const booksInBookshelves = this.state.booksInBookshelves;
+    return foundBooks.map((book) => {
+      const found = booksInBookshelves.find(ab => ab.id === book.id);
+      book.shelf = found ? found.shelf : 'none';
+      return book;
+    });
+  }
 
   updateLocalState(book, newShelfName) {
     book.shelf = newShelfName;
     this.setState((prev) => ({
-      allBooks: prev.allBooks,
-      searchResultBooks: prev.searchResultBooks
-    }))
+      booksInBookshelves: prev.booksInBookshelves,
+      booksInSearchResult: prev.booksInSearchResult
+    }));
   }
 
-  updateBookShelves(book, newShelfName) {
+  updateBookShelves(book, newShelfName, withRead) {
     if (book.shelf === newShelfName) {
       return;
     }
     BooksAPI.update(book, newShelfName)
-      .then(() => this.updateLocalState(book, newShelfName))
+      .then(() => {
+        this.updateLocalState(book, newShelfName);
+        if (withRead) {
+          this.getBooksInBookshelves();
+        }
+      })
   }
 
   updateBookShelvesFromSearch(book, newShelfName) {
-    this.updateBookShelves(book, newShelfName);
-    this.readAllBooks();
+    this.updateBookShelves(book, newShelfName, true);
   }
 
   render() {
-    const {allBooks, searchResultBooks} = this.state;
+    const { booksInBookshelves, booksInSearchResult } = this.state;
     const shelves = [
       { title: "Currently Reading", name: "currentlyReading" }
       , { title: "Want to Read", name: "wantToRead" }
       , { title: "Read", name: "read" }
-    ]
+    ];
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <BookSearch
-            books={searchResultBooks}
-            onSearchBooks={(query) => this.searchBooks(query)}
-            onBookshelfChange={(book, newShelf) => this.updateBookShelvesFromSearch(book, newShelf)}
+          <div>
+            <BookSearch
+              books={booksInSearchResult}
+              onSearchBooks={(query) => this.searchBooks(query)}
+              onBookshelfChange={(book, newShelf) => this.updateBookShelvesFromSearch(book, newShelf)}
+              onComponentDidMount={() => this.setState({ booksInSearchResult: [] })}
             />
+          </div>
         )} />
         <Route exact path="/" render={() => (
           <div>
             <BookShelfList
-              books={allBooks}
+              books={booksInBookshelves}
               shelves={shelves}
               title='MyReads'
               onBookshelfChange={(book, newShelf) => this.updateBookShelves(book, newShelf)}
@@ -87,7 +102,7 @@ class BooksApp extends React.Component {
           </div>
         )} />
       </div>
-    )
+    );
   }
 }
 
