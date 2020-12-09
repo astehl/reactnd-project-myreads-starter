@@ -9,14 +9,20 @@ class Book extends React.Component {
         onBookshelfChange: PropTypes.func
     };
 
-    handlerBookshelfChange(book, newBookshelf, onBookshelfChange) {
+    constructor(props) {
+        super(props);
+        this.handlerBookshelfChange = this.handlerBookshelfChange.bind(this);
+    }
+
+    handlerBookshelfChange(newBookshelf) {
+        const {book, onBookshelfChange} = this.props;
         if (onBookshelfChange) {
             onBookshelfChange(book, newBookshelf);
         }
     }
 
     render() {
-        const {book, onBookshelfChange} = this.props;
+        const {book} = this.props;
         const authors = book.authors ? book.authors.join(', ') : '';
         return (
             <div className="book">
@@ -24,7 +30,7 @@ class Book extends React.Component {
                     <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                     <BookShelfChanger
                         currentBookshelf={book.shelf}
-                        onBookshelfChange={(name) => this.handlerBookshelfChange(book, name, onBookshelfChange)}
+                        onBookshelfChange={this.handlerBookshelfChange}
                     />
                 </div>
                 <div className="book-title">{book.title}</div>

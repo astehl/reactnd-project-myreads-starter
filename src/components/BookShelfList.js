@@ -11,12 +11,24 @@ class BookShelfList extends React.Component {
         onBookshelfChange: PropTypes.func
     }
 
+    constructor(props) {
+        super(props);
+        this.onBookshelfChange = this.onBookshelfChange.bind(this);
+    }
+
+    onBookshelfChange(book, newShelf) {
+        const onBookshelfChangeHandler = this.props.onBookshelfChange;
+        if (onBookshelfChangeHandler) {
+            onBookshelfChangeHandler(book, newShelf);
+        }
+    }
+
     render() {
-        const { books, shelves, title, onBookshelfChange } = this.props;
+        const { books, shelves, title } = this.props;
         return (
             <div className="list-books">
                 <div className="list-books-title">
-                    <h1>{title ? title : '[bookshlflist]'}</h1>
+                    <h1>{title ? title : '[bookshelflist]'}</h1>
                 </div>
                 <div className="list-books-content">
                     <div>
@@ -25,7 +37,7 @@ class BookShelfList extends React.Component {
                                 key={shelf.name}
                                 books={books.filter((book) => (book.shelf === shelf.name))}
                                 title={shelf.title}
-                                onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
+                                onBookshelfChange={this.onBookshelfChange}
                             />
                         ))}
                     </div>
