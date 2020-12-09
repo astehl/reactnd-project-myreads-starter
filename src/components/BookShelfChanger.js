@@ -8,11 +8,15 @@ class BookShelfChanger extends React.Component {
         onBookshelfChange: PropTypes.func
     };
 
+    constructor(props) {
+        super(props);
+        this.onShelfChange = this.onShelfChange.bind(this);
+    }
+
     onShelfChange(evt) {
-        const newShelf = evt.target.value;
         const changeHandler = this.props.onBookshelfChange;
-        if (changeHandler && newShelf !== this.props.currentBookshelf) {
-            changeHandler(newShelf);
+        if (changeHandler) {
+            changeHandler(evt.target.value);
         }
     }
 
@@ -26,7 +30,7 @@ class BookShelfChanger extends React.Component {
         ];
         return (
             <div className="book-shelf-changer">
-                <select value={currentShelf} onChange={(event) => this.onShelfChange(event)}>
+                <select value={currentShelf} onChange={this.onShelfChange}>
                     <option value="move" disabled>Move to...</option>
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>{option.text}</option>

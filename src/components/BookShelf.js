@@ -10,12 +10,24 @@ class BookShelf extends React.Component {
         onBookshelfChange: PropTypes.func
     };
 
+    constructor(props) {
+        super(props);
+        this.onBookshelfChange = this.onBookshelfChange.bind(this);
+    }
+
     booksToRender() {
         return this.props.books.filter((book) => (book.imageLinks && book.imageLinks.thumbnail));
     }
 
+    onBookshelfChange(book, newShelf) {
+        const onBookshelfChange = this.props.onBookshelfChange;
+        if (onBookshelfChange) {
+            onBookshelfChange(book, newShelf);
+        }
+    }
+
     render() {
-        const { title, onBookshelfChange } = this.props;
+        const title = this.props.title;
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title ? title : '[bookshelf name]'}</h2>
@@ -25,7 +37,7 @@ class BookShelf extends React.Component {
                             <li key={book.id}>
                                 <Book
                                     book={book}
-                                    onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
+                                    onBookshelfChange={this.onBookshelfChange}
                                 />
                             </li>
                         ))}

@@ -17,6 +17,18 @@ class BookSearch extends React.Component {
         query: ''
     };
 
+    constructor(props) {
+        super(props);
+        this.onBookshelfChange = this.onBookshelfChange.bind(this);
+    }
+
+    onBookshelfChange(book, newShelf) {
+        const onBookshelfChangeHandler = this.props.onBookshelfChange;
+        if (onBookshelfChangeHandler) {
+            onBookshelfChangeHandler(book, newShelf);
+        }
+    }
+
     componentDidMount() {
         const onMountHandler = this.props.onComponentDidMount;
         if (onMountHandler) {
@@ -52,7 +64,7 @@ class BookSearch extends React.Component {
 
     render() {
         const { query } = this.state;
-        const { books, onBookshelfChange } = this.props;
+        const { books } = this.props;
         return (
             <div>
                 <div className="search-books">
@@ -75,7 +87,7 @@ class BookSearch extends React.Component {
                     <BookShelf
                         books={books}
                         title="Search Result"
-                        onBookshelfChange={(book, newShelf) => onBookshelfChange ? onBookshelfChange(book, newShelf) : null}
+                        onBookshelfChange={this.onBookshelfChange}
                     />
                 )}
             </div>
