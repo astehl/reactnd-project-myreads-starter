@@ -10,7 +10,7 @@ class BookSearch extends React.Component {
         books: PropTypes.array.isRequired,
         onSearchBooks: PropTypes.func,
         onBookshelfChange: PropTypes.func,
-        onComponentDidMount: PropTypes.func
+        onInitSearchResult: PropTypes.func
     };
 
     state = {
@@ -30,9 +30,13 @@ class BookSearch extends React.Component {
     }
 
     componentDidMount() {
-        const onMountHandler = this.props.onComponentDidMount;
-        if (onMountHandler) {
-            onMountHandler();
+        this.handleInitSearchResults();
+    }
+
+    handleInitSearchResults() {
+        const handler = this.props.onInitSearchResult;
+        if (handler) {
+            handler();
         }
     }
 
@@ -43,9 +47,10 @@ class BookSearch extends React.Component {
     searchBooks() {
         const { query } = this.state;
         if (this.queryIsEmpty()) {
-            return;
+            this.handleInitSearchResults();
+        } else {
+            this.props.onSearchBooks(query);
         }
-        this.props.onSearchBooks(query);
     }
 
     doTheSearch = debounce(() => this.searchBooks(), 500);
