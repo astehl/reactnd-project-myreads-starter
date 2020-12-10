@@ -82,6 +82,7 @@ class BooksApp extends React.Component {
           <div>
             <BookSearch
               books={booksInSearchResult}
+              debounce={250}
               onSearchBooks={(query) => this.searchBooks(query)}
               onBookshelfChange={(book, newShelf) => this.updateBookShelvesFromSearch(book, newShelf)}
               onInitSearchResult={() => this.setState({ booksInSearchResult: [] })}

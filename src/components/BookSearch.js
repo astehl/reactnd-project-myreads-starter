@@ -8,6 +8,7 @@ class BookSearch extends React.Component {
 
     static propTypes = {
         books: PropTypes.array.isRequired,
+        debounce: PropTypes.number,
         onSearchBooks: PropTypes.func,
         onBookshelfChange: PropTypes.func,
         onInitSearchResult: PropTypes.func
@@ -40,6 +41,11 @@ class BookSearch extends React.Component {
         }
     }
 
+    isValidDebounceConfigured() {
+        const debounceTime = this.props.debounce;
+        return debounceTime && Number.isInteger(debounceTime) && debounceTime > 0 && debounceTime <= 2000;
+    }
+
     queryIsEmpty() {
         return this.state.query === '';
     }
@@ -53,7 +59,7 @@ class BookSearch extends React.Component {
         }
     }
 
-    doTheSearch = debounce(() => this.searchBooks(), 500);
+    doTheSearch = this.isValidDebounceConfigured() ? debounce(() => this.searchBooks(), this.props.debounce) : () => this.searchBooks();
 
     updateQuery(event) {
         this.setState({
