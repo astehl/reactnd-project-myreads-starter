@@ -107,16 +107,17 @@ class BookSearch extends React.Component {
                         </div>
                     </div>
                     <div className="search-books-results">
-                        <ol className="books-grid"></ol>
+                        <div className="books-grid">
+                            {this.shouldShowSearchResult() && (
+                                <BookShelf
+                                    books={books}
+                                    title="Search Result"
+                                    onBookshelfChange={this.onBookshelfChange}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
-                {this.shouldShowSearchResult() && (
-                    <BookShelf
-                        books={books}
-                        title="Search Result"
-                        onBookshelfChange={this.onBookshelfChange}
-                    />
-                )}
             </div>
         );
     }
