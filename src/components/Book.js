@@ -36,11 +36,12 @@ class Book extends React.Component {
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
-                    <BookShelfChanger
-                        currentBookshelf={book.shelf}
-                        onBookshelfChange={this.handlerBookshelfChange}
-                    />
+                    <div className="book-cover" style={{width: 128, height: 192, backgroundImage: `url("${book.imageLinks.thumbnail}")`}}>
+                        <BookShelfChanger
+                            currentBookshelf={book.shelf}
+                            onBookshelfChange={this.handlerBookshelfChange}
+                        />
+                    </div>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{authors}</div>
