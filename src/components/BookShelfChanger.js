@@ -1,6 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * @description BookShelfChanger component
+ * Implements the selection of a bookshelf option.
+ *
+ * @param {string} currentBookshelf - name of the currently assigned bookshelf
+ * @param {function} onBookshelfChange(nameNewBookshelf) - eventhandler; called when a book's bookshelf assignment was changed. Parameters:
+ *  - {string} nameNewBookshelf - name of the new assigned bookshelf
+ */
 class BookShelfChanger extends React.Component {
 
     static propTypes = {

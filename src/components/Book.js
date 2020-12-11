@@ -2,6 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BookShelfChanger from './BookShelfChanger';
 
+/**
+ * @description Book component
+ * Renders a Book representation
+ *
+ * @param {object} book - the Book object to be rendered
+ * @param {function} onBookshelfChange(book, bookshelfName) - eventhandler; called when a book's bookshelf assignment was changed. Parameters:
+ *  - {obj} book - book entity to be changed
+ *  - {string} bookshelfName - name of the new assigned bookshelf
+ */
 class Book extends React.Component {
 
     static propTypes = {

@@ -2,6 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
+/**
+ * @description BookShelf component
+ * Renders given books as a bookshelf representation.
+ *
+ * @param {string} title - the title of a bookshelf. If not provided the string '[bookshelf name]' will be rendered as title
+ * @param {object[]} books - array of Book objects to be rendered
+ * @param {function} onBookshelfChange(book, bookshelfName) - eventhandler; called when a book's bookshelf assignment was changed. Parameters:
+ *  - {obj} book - book entity to be changed
+ *  - {string} bookshelfName - name of the new assigned bookshelf
+ */
 class BookShelf extends React.Component {
 
     static propTypes = {

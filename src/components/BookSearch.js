@@ -4,6 +4,22 @@ import BookShelf from './BookShelf'
 import debounce from 'lodash.debounce'
 import PropTypes from 'prop-types'
 
+/**
+ * @description BookSearch component
+ * Provides input of query strings search for and uses BookShelf component for rendering given search result.
+ * In order order to keep the component independent from data provider, new searches are triggered thru event handler
+ * and search results are provided as a property.
+ *
+ * @param {Book[]} books - array of Book JSON representations to be rendered as the search result
+ * @param {number} debounce - time in ms to wait before search event is fired after query input. values between 1 and 2000 are accepted.
+ * @param {function} onSearchBooks(queryString) - eventhandler; called when a new search should be performed. Parameters:
+ *  - {sting} queryString
+ * @param {function} onBookshelfChange(book, bookshelfName) - eventhandler; called when a book's bookshelf assignment was changed. Parameters:
+ *  - {obj} book - book entity to be changed
+ *  - {string} bookshelfName - name of the new assigned bookshelf
+ * @param {function} onInitSearchResult - marker eventhandler; called when the provided search result should be initialized.
+ *  (Little hack needed, since search result is not managed by the component itself)
+ */
 class BookSearch extends React.Component {
 
     static propTypes = {
